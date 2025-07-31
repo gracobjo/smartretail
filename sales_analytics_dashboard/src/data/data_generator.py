@@ -164,7 +164,7 @@ class DataGenerator:
         total = price * quantity
         
         return {
-            'transaction_id': f'TXN_{len(sales_data):08d}',
+            'transaction_id': f'TXN_{random.randint(10000000, 99999999)}',
             'customer_id': customer['customer_id'],
             'purchase_date': purchase_date,
             'product_category': category,
