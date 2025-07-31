@@ -1,0 +1,25 @@
+text,emotion
+"I am so happy today! Everything is going great!",joy
+"I feel really sad and lonely right now",sadness
+"This makes me so angry! I can't believe it!",anger
+"I'm scared about what might happen next",fear
+"Wow! That's amazing and unexpected!",surprise
+"I feel calm and neutral about this situation",neutral
+"I love this! It's wonderful!",joy
+"I'm feeling down and depressed",sadness
+"This is frustrating and irritating",anger
+"I'm worried about the future",fear
+"That's incredible! I'm shocked!",surprise
+"I don't have strong feelings about this",neutral
+"Today is a beautiful day!",joy
+"I'm feeling blue and melancholic",sadness
+"This is unacceptable and infuriating",anger
+"I'm anxious about the outcome",fear
+"This is unbelievable! Amazing!",surprise
+"I'm indifferent to this matter",neutral
+"I'm thrilled and excited!",joy
+"I feel hopeless and miserable",sadness
+"This is outrageous and maddening",anger
+"I'm terrified of what could happen",fear
+"This is astonishing! Incredible!",surprise
+"I have no particular feelings about this",neutral 
