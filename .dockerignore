@@ -1,0 +1,64 @@
+# Archivos de Git
+.git
+.gitignore
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Datos temporales
+*.tmp
+*.temp
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Documentación generada
+docs/_build/
+
+# Modelos entrenados (opcional, para reducir tamaño)
+*.pkl
+*.joblib
+*.h5
+
+# Datos grandes (opcional)
+data/raw/
+data/processed/
+results/
+
+# Jupyter notebooks (opcional)
+*.ipynb_checkpoints/ 

@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # Servicio principal de SmartRetail
+  smartretail:
+    build: .
+    container_name: smartretail-main
+    ports:
+      - "8501:8501"  # Streamlit dashboard
+      - "8888:8888"  # Jupyter notebooks
+      - "5000:5000"  # API endpoints
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=production
+    command: streamlit run sales_analytics_dashboard/run_dashboard.py --server.port 8501 --server.address 0.0.0.0
+
+  # Servicio de detección de fraude
+  fraud-detection:
+    build: .
+    container_name: smartretail-fraud
+    ports:
+      - "8502:8501"
+    volumes:
+      - ./fraud_detection:/app/fraud_detection
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    command: python fraud_detection/run_demo.py
+
+  # Servicio de recomendaciones
+  recommendation-system:
+    build: .
+    container_name: smartretail-recommendations
+    ports:
+      - "8503:8501"
+    volumes:
+      - ./recommendation_system:/app/recommendation_system
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    command: python recommendation_system/main.py
+
+  # Servicio de análisis de sentimientos
+  sentiment-analysis:
+    build: .
+    container_name: smartretail-sentiment
+    ports:
+      - "8504:8501"
+    volumes:
+      - ./twitter_sentiment_analysis:/app/twitter_sentiment_analysis
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    command: python twitter_sentiment_analysis/run_pipeline.py
+
+  # Base de datos (opcional)
+  postgres:
+    image: postgres:13
+    container_name: smartretail-db
+    environment:
+      POSTGRES_DB: smartretail
+      POSTGRES_USER: smartretail_user
+      POSTGRES_PASSWORD: smartretail_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Redis para caché (opcional)
+  redis:
+    image: redis:6-alpine
+    container_name: smartretail-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data: 
