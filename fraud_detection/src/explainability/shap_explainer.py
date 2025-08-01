@@ -78,7 +78,7 @@ class SHAPExplainer:
         print(f"Calculating SHAP values for {model_name}...")
         
         explainer = self.explainers[model_name]
-        shap_values = explainer.shap_values(X)
+        shap_values = explainer.shap_values(X, check_additivity=False)
         
         # Handle different output formats
         if isinstance(shap_values, list):
@@ -271,8 +271,14 @@ class SHAPExplainer:
         mean_shap = np.abs(shap_values).mean(axis=0)
         
         # Create importance dataframe
+        # Ensure feature names match the SHAP values length
+        if self.config['feature_names'] and len(self.config['feature_names']) == len(mean_shap):
+            feature_names = self.config['feature_names']
+        else:
+            feature_names = [f'feature_{i}' for i in range(len(mean_shap))]
+        
         importance_df = pd.DataFrame({
-            'feature': self.config['feature_names'] if self.config['feature_names'] else [f'feature_{i}' for i in range(len(mean_shap))],
+            'feature': feature_names,
             'importance': mean_shap
         })
         

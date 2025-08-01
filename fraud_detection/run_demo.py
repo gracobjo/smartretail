@@ -151,6 +151,9 @@ def run_complete_pipeline():
     print("=" * 60)
     
     # Separar features y target
+    print(f"Columnas disponibles después del feature engineering: {list(data_engineered.columns)}")
+    print(f"Distribución de fraude después del feature engineering: {data_engineered['fraud'].value_counts()}")
+    
     X = data_engineered.drop(columns=['fraud'])
     y = data_engineered['fraud']
     
@@ -158,8 +161,20 @@ def run_complete_pipeline():
     from sklearn.model_selection import train_test_split
     from sklearn.preprocessing import StandardScaler
     
+    # Verificar que hay ejemplos de ambas clases
+    print(f"Distribución total de fraude: {y.value_counts()}")
+    
+    # Asegurar que hay suficientes ejemplos de cada clase
+    if y.value_counts().min() < 10:
+        print("Advertencia: Muy pocos ejemplos de la clase minoritaria")
+        # Usar un split más conservador
+        test_size = min(0.1, y.value_counts().min() / len(y))
+        print(f"Ajustando test_size a {test_size:.3f}")
+    else:
+        test_size = 0.2
+    
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+        X, y, test_size=test_size, random_state=42, stratify=y
     )
     
     # Escalar features

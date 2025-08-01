@@ -64,8 +64,11 @@ class DataProcessor:
         if missing_counts.sum() > 0:
             print(f"Missing values found: {missing_counts[missing_counts > 0]}")
             
-            # For numerical columns, fill with median
+            # For numerical columns, fill with median (exclude target column)
             numerical_cols = cleaned_data.select_dtypes(include=[np.number]).columns
+            if 'fraud' in numerical_cols:
+                numerical_cols = numerical_cols.drop('fraud')
+            
             for col in numerical_cols:
                 if cleaned_data[col].isnull().sum() > 0:
                     median_val = cleaned_data[col].median()
@@ -80,8 +83,11 @@ class DataProcessor:
                     cleaned_data[col].fillna(mode_val, inplace=True)
                     print(f"Filled missing values in {col} with mode: {mode_val}")
         
-        # Handle outliers for numerical columns
+        # Handle outliers for numerical columns (exclude target column)
         numerical_cols = cleaned_data.select_dtypes(include=[np.number]).columns
+        if 'fraud' in numerical_cols:
+            numerical_cols = numerical_cols.drop('fraud')
+        
         for col in numerical_cols:
             Q1 = cleaned_data[col].quantile(0.25)
             Q3 = cleaned_data[col].quantile(0.75)
@@ -123,8 +129,15 @@ class DataProcessor:
         
         engineered_data = data.copy()
         
-        # Get numerical columns for feature engineering
+        # Preserve the target column
+        target_column = None
+        if 'fraud' in engineered_data.columns:
+            target_column = engineered_data['fraud'].copy()
+        
+        # Get numerical columns for feature engineering (exclude target column)
         numerical_cols = engineered_data.select_dtypes(include=[np.number]).columns
+        if 'fraud' in numerical_cols:
+            numerical_cols = numerical_cols.drop('fraud')
         
         # Create statistical features
         for col in numerical_cols:
@@ -149,7 +162,7 @@ class DataProcessor:
         if 'amount' in engineered_data.columns:
             # Amount ratios with other numerical features
             for col in numerical_cols:
-                if col != 'amount' and col != 'fraud':
+                if col != 'amount':
                     engineered_data[f'amount_{col}_ratio'] = engineered_data['amount'] / (engineered_data[col] + 1e-8)
         
         # Create categorical features from numerical ones
@@ -186,6 +199,13 @@ class DataProcessor:
                     self.label_encoders[col].fit(list(known_values) + ['unknown'])
                 
                 engineered_data[col] = self.label_encoders[col].transform(engineered_data[col])
+        
+        # Clean any NaN values created during feature engineering
+        engineered_data = engineered_data.fillna(0)
+        
+        # Restore target column if it existed
+        if target_column is not None:
+            engineered_data['fraud'] = target_column
         
         print(f"Feature engineering completed! Original features: {len(data.columns)}, New features: {len(engineered_data.columns)}")
         return engineered_data

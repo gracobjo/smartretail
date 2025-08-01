@@ -1,0 +1,250 @@
+============================================================
+FEATURE ANALYSIS REPORT
+============================================================
+
+DATASET INFORMATION:
+-------------------------
+Shape: (10000, 25)
+Features: 25
+Samples: 10000
+
+DATA TYPES:
+---------------
+float64: 21
+int32: 4
+
+TARGET ANALYSIS:
+------------------
+Class distribution:
+  Class 0: 9503 (95.03%)
+  Class 1: 497 (4.97%)
+
+NUMERICAL FEATURES:
+----------------------
+feature_0:
+  Mean: 0.0062
+  Std: 1.0020
+  Min: -3.8367
+  Max: 3.7278
+  Q1: -0.6810
+  Q3: 0.6726
+
+feature_1:
+  Mean: 0.0066
+  Std: 0.9891
+  Min: -4.4656
+  Max: 3.2087
+  Q1: -0.6542
+  Q3: 0.6760
+
+feature_2:
+  Mean: -0.0160
+  Std: 1.0055
+  Min: -3.8170
+  Max: 3.8298
+  Q1: -0.6890
+  Q3: 0.6644
+
+feature_3:
+  Mean: -0.0034
+  Std: 0.9936
+  Min: -3.9993
+  Max: 4.4791
+  Q1: -0.6676
+  Q3: 0.6712
+
+feature_4:
+  Mean: 0.0094
+  Std: 0.9980
+  Min: -3.5328
+  Max: 3.7079
+  Q1: -0.6627
+  Q3: 0.6814
+
+feature_5:
+  Mean: -0.0076
+  Std: 1.0038
+  Min: -3.7261
+  Max: 3.7662
+  Q1: -0.6874
+  Q3: 0.6754
+
+feature_6:
+  Mean: 0.0115
+  Std: 1.0098
+  Min: -4.4630
+  Max: 3.6028
+  Q1: -0.6671
+  Q3: 0.7121
+
+feature_7:
+  Mean: -0.0015
+  Std: 1.0066
+  Min: -3.4634
+  Max: 3.5360
+  Q1: -0.6856
+  Q3: 0.6853
+
+feature_8:
+  Mean: -0.0043
+  Std: 0.9972
+  Min: -3.6810
+  Max: 3.6056
+  Q1: -0.6780
+  Q3: 0.6755
+
+feature_9:
+  Mean: -0.0084
+  Std: 0.9998
+  Min: -3.4417
+  Max: 3.8527
+  Q1: -0.6924
+  Q3: 0.6663
+
+feature_10:
+  Mean: 0.0015
+  Std: 1.0127
+  Min: -4.2954
+  Max: 3.5365
+  Q1: -0.6769
+  Q3: 0.6769
+
+feature_11:
+  Mean: 0.0129
+  Std: 1.0044
+  Min: -3.6884
+  Max: 4.5621
+  Q1: -0.6659
+  Q3: 0.6898
+
+feature_12:
+  Mean: 0.0038
+  Std: 0.9995
+  Min: -3.9400
+  Max: 3.6916
+  Q1: -0.6581
+  Q3: 0.6632
+
+feature_13:
+  Mean: -0.0196
+  Std: 1.0029
+  Min: -4.0669
+  Max: 3.7454
+  Q1: -0.7020
+  Q3: 0.6488
+
+feature_14:
+  Mean: 0.0116
+  Std: 0.9973
+  Min: -3.8564
+  Max: 4.2020
+  Q1: -0.6681
+  Q3: 0.6977
+
+feature_15:
+  Mean: -0.0145
+  Std: 1.0082
+  Min: -3.7052
+  Max: 3.9262
+  Q1: -0.6899
+  Q3: 0.6561
+
+feature_16:
+  Mean: 0.0152
+  Std: 0.9925
+  Min: -3.7448
+  Max: 3.4019
+  Q1: -0.6501
+  Q3: 0.6847
+
+feature_17:
+  Mean: -0.0051
+  Std: 0.9865
+  Min: -3.6011
+  Max: 3.7128
+  Q1: -0.6801
+  Q3: 0.6619
+
+feature_18:
+  Mean: 0.0182
+  Std: 1.0030
+  Min: -3.3079
+  Max: 3.9769
+  Q1: -0.6599
+  Q3: 0.6902
+
+feature_19:
+  Mean: 0.0031
+  Std: 0.9854
+  Min: -4.1577
+  Max: 3.7602
+  Q1: -0.6569
+  Q3: 0.6637
+
+amount:
+  Mean: 120.4940
+  Std: 167.0915
+  Min: 0.0057
+  Max: 3201.6652
+  Q1: 31.1792
+  Q3: 152.4327
+
+time:
+  Mean: 11.3622
+  Std: 6.9746
+  Min: 0.0000
+  Max: 23.0000
+  Q1: 5.0000
+  Q3: 17.0000
+
+location:
+  Mean: 4.5823
+  Std: 2.9528
+  Min: 0.0000
+  Max: 14.0000
+  Q1: 2.0000
+  Q3: 7.0000
+
+merchant_type:
+  Mean: 2.0260
+  Std: 1.4164
+  Min: 0.0000
+  Max: 4.0000
+  Q1: 1.0000
+  Q3: 3.0000
+
+fraud:
+  Mean: 0.0497
+  Std: 0.2173
+  Min: 0.0000
+  Max: 1.0000
+  Q1: 0.0000
+  Q3: 0.0000
+
+CORRELATION WITH TARGET:
+-------------------------
+feature_0: -0.0009
+feature_1: -0.0240
+feature_2: 0.0088
+feature_3: 0.0123
+feature_4: 0.0118
+feature_5: -0.0082
+feature_6: -0.0114
+feature_7: 0.0059
+feature_8: 0.0159
+feature_9: -0.0073
+feature_10: 0.0006
+feature_11: -0.0090
+feature_12: -0.0153
+feature_13: 0.0162
+feature_14: -0.0043
+feature_15: -0.0019
+feature_16: 0.0037
+feature_17: -0.0056
+feature_18: 0.0045
+feature_19: -0.0002
+amount: 0.5017
+time: -0.1312
+location: 0.1368
+merchant_type: 0.0062
+fraud: 1.0000

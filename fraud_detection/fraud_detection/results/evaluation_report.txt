@@ -1,0 +1,77 @@
+============================================================
+FRAUD DETECTION MODEL EVALUATION REPORT
+============================================================
+
+MODEL PERFORMANCE SUMMARY:
+----------------------------------------
+Model           Accuracy   Precision  Recall     F1         ROC AUC   
+----------------------------------------------------------------------
+xgboost         0.9545     0.5444     0.4949     0.5185     0.8754    
+random_forest   0.9225     0.3586     0.7172     0.4781     0.9021    
+logistic_regression 0.8480     0.2161     0.7879     0.3391     0.8782    
+
+DETAILED RESULTS - XGBOOST:
+----------------------------------------
+Accuracy: 0.9545
+Precision: 0.5444
+Recall: 0.4949
+F1-Score: 0.5185
+ROC AUC: 0.8754
+Average Precision: 0.5533
+Specificity: 0.9784
+Sensitivity: 0.4949
+
+Confusion Matrix:
+  True Negatives: 1860
+  False Positives: 41
+  False Negatives: 50
+  True Positives: 49
+
+DETAILED RESULTS - RANDOM_FOREST:
+----------------------------------------
+Accuracy: 0.9225
+Precision: 0.3586
+Recall: 0.7172
+F1-Score: 0.4781
+ROC AUC: 0.9021
+Average Precision: 0.4818
+Specificity: 0.9332
+Sensitivity: 0.7172
+
+Confusion Matrix:
+  True Negatives: 1774
+  False Positives: 127
+  False Negatives: 28
+  True Positives: 71
+
+DETAILED RESULTS - LOGISTIC_REGRESSION:
+----------------------------------------
+Accuracy: 0.8480
+Precision: 0.2161
+Recall: 0.7879
+F1-Score: 0.3391
+ROC AUC: 0.8782
+Average Precision: 0.5316
+Specificity: 0.8511
+Sensitivity: 0.7879
+
+Confusion Matrix:
+  True Negatives: 1618
+  False Positives: 283
+  False Negatives: 21
+  True Positives: 78
+
+RECOMMENDATIONS:
+--------------------
+Best F1-Score: xgboost (0.5185)
+Best ROC AUC: random_forest (0.9021)
+
+PERFORMANCE ANALYSIS:
+--------------------
+- xgboost: Low precision, consider adjusting threshold
+- xgboost: Low recall, consider data balancing
+- random_forest: Low precision, consider adjusting threshold
+- random_forest: Low recall, consider data balancing
+- random_forest: Excellent ROC AUC performance
+- logistic_regression: Low precision, consider adjusting threshold
+- logistic_regression: Low recall, consider data balancing
