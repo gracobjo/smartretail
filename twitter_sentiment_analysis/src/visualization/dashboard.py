@@ -653,7 +653,7 @@ class TwitterSentimentDashboard:
     
     def run(self, debug=True, port=8051):
         """Run the dashboard."""
-        self.app.run_server(debug=debug, port=port)
+        self.app.run(debug=debug, port=port)
 
 def main():
     """Run the Twitter sentiment analysis dashboard."""

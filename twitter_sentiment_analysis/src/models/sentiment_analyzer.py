@@ -16,13 +16,14 @@ from transformers import (
 )
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import warnings
+import re
 warnings.filterwarnings('ignore')
 
 class SentimentAnalyzer:
     """BERT-based sentiment analyzer for Twitter data."""
     
     def __init__(self, model_name: str = 'distilbert-base-uncased', 
-                 max_length: int = 128, batch_size: int = 32):
+                 max_length: int = 128, batch_size: int = 32, use_fallback: bool = True):
         """
         Initialize sentiment analyzer.
         
@@ -30,37 +31,120 @@ class SentimentAnalyzer:
             model_name: Name of the BERT model to use
             max_length: Maximum sequence length
             batch_size: Batch size for processing
+            use_fallback: Whether to use fallback method if BERT fails
         """
         self.model_name = model_name
         self.max_length = max_length
         self.batch_size = batch_size
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.use_fallback = use_fallback
+        self.use_bert = True
         
         print(f"Using device: {self.device}")
         print(f"Loading model: {model_name}")
         
-        # Initialize tokenizer and model
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            model_name, 
-            num_labels=3  # positive, negative, neutral
-        )
+        try:
+            # Initialize tokenizer and model
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.model = AutoModelForSequenceClassification.from_pretrained(
+                model_name, 
+                num_labels=3  # positive, negative, neutral
+            )
+            
+            self.model.to(self.device)
+            self.model.eval()
+            
+            # Create sentiment pipeline
+            self.sentiment_pipeline = pipeline(
+                'sentiment-analysis',
+                model=self.model,
+                tokenizer=self.tokenizer,
+                device=0 if torch.cuda.is_available() else -1
+            )
+            
+            # Sentiment labels
+            self.sentiment_labels = ['negative', 'neutral', 'positive']
+            
+            print("BERT model loaded successfully!")
+            
+        except Exception as e:
+            print(f"Warning: Could not load BERT model: {e}")
+            if self.use_fallback:
+                print("Using fallback sentiment analysis method...")
+                self.use_bert = False
+                self._setup_fallback_analyzer()
+            else:
+                raise e
+    
+    def _setup_fallback_analyzer(self):
+        """Setup fallback sentiment analysis using simple keyword-based approach."""
+        # Positive and negative keywords
+        self.positive_words = {
+            'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 
+            'awesome', 'love', 'like', 'happy', 'joy', 'pleased', 'satisfied',
+            'best', 'perfect', 'outstanding', 'brilliant', 'superb', 'terrific',
+            'positive', 'optimistic', 'excited', 'thrilled', 'delighted'
+        }
         
-        self.model.to(self.device)
-        self.model.eval()
+        self.negative_words = {
+            'bad', 'terrible', 'awful', 'horrible', 'worst', 'disappointed',
+            'hate', 'dislike', 'sad', 'angry', 'frustrated', 'upset', 'annoyed',
+            'negative', 'pessimistic', 'depressed', 'miserable', 'awful', 'dreadful',
+            'terrible', 'horrible', 'atrocious', 'abysmal', 'lousy'
+        }
         
-        # Create sentiment pipeline
-        self.sentiment_pipeline = pipeline(
-            'sentiment-analysis',
-            model=self.model,
-            tokenizer=self.tokenizer,
-            device=0 if torch.cuda.is_available() else -1
-        )
+        # Neutral indicators
+        self.neutral_words = {
+            'okay', 'fine', 'alright', 'normal', 'average', 'neutral',
+            'indifferent', 'neither', 'nor', 'but', 'however'
+        }
         
-        # Sentiment labels
-        self.sentiment_labels = ['negative', 'neutral', 'positive']
+        print("Fallback sentiment analyzer initialized!")
+    
+    def _fallback_sentiment_analysis(self, text: str) -> Dict:
+        """
+        Simple keyword-based sentiment analysis as fallback.
         
-        print("Sentiment analyzer initialized successfully!")
+        Args:
+            text: Input text
+            
+        Returns:
+            Dictionary with sentiment prediction
+        """
+        if not text or text.strip() == '':
+            return {'sentiment': 'neutral', 'confidence': 0.0}
+        
+        text_lower = text.lower()
+        words = re.findall(r'\b\w+\b', text_lower)
+        
+        positive_count = sum(1 for word in words if word in self.positive_words)
+        negative_count = sum(1 for word in words if word in self.negative_words)
+        neutral_count = sum(1 for word in words if word in self.neutral_words)
+        
+        total_words = len(words)
+        if total_words == 0:
+            return {'sentiment': 'neutral', 'confidence': 0.0}
+        
+        # Calculate scores
+        positive_score = positive_count / total_words
+        negative_score = negative_count / total_words
+        neutral_score = neutral_count / total_words
+        
+        # Determine sentiment
+        if positive_score > negative_score and positive_score > 0.1:
+            sentiment = 'positive'
+            confidence = min(positive_score * 2, 0.95)
+        elif negative_score > positive_score and negative_score > 0.1:
+            sentiment = 'negative'
+            confidence = min(negative_score * 2, 0.95)
+        else:
+            sentiment = 'neutral'
+            confidence = max(0.3, 1 - (positive_score + negative_score))
+        
+        return {
+            'sentiment': sentiment,
+            'confidence': confidence
+        }
     
     def preprocess_text(self, text: str) -> str:
         """
@@ -99,6 +183,27 @@ class SentimentAnalyzer:
                 'sentiment': 'neutral',
                 'confidence': 0.0,
                 'scores': {'negative': 0.33, 'neutral': 0.34, 'positive': 0.33}
+            }
+        
+        # Use fallback method if BERT is not available
+        if not self.use_bert:
+            result = self._fallback_sentiment_analysis(text)
+            scores = {
+                'negative': 0.0,
+                'neutral': 0.0,
+                'positive': 0.0
+            }
+            scores[result['sentiment']] = result['confidence']
+            # Distribute remaining probability
+            remaining = 1.0 - result['confidence']
+            other_labels = [l for l in scores.keys() if l != result['sentiment']]
+            for other_label in other_labels:
+                scores[other_label] = remaining / len(other_labels)
+            
+            return {
+                'sentiment': result['sentiment'],
+                'confidence': result['confidence'],
+                'scores': scores
             }
         
         # Preprocess text
@@ -154,6 +259,29 @@ class SentimentAnalyzer:
         print(f"Predicting sentiment for {len(texts)} texts...")
         
         results = []
+        
+        # Use fallback method if BERT is not available
+        if not self.use_bert:
+            for text in texts:
+                result = self._fallback_sentiment_analysis(text)
+                scores = {
+                    'negative': 0.0,
+                    'neutral': 0.0,
+                    'positive': 0.0
+                }
+                scores[result['sentiment']] = result['confidence']
+                # Distribute remaining probability
+                remaining = 1.0 - result['confidence']
+                other_labels = [l for l in scores.keys() if l != result['sentiment']]
+                for other_label in other_labels:
+                    scores[other_label] = remaining / len(other_labels)
+                
+                results.append({
+                    'sentiment': result['sentiment'],
+                    'confidence': result['confidence'],
+                    'scores': scores
+                })
+            return results
         
         # Process in batches
         for i in range(0, len(texts), self.batch_size):
