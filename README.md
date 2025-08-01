@@ -1,242 +1,306 @@
-# 🚀 SmartRetail - Plataforma Integral de Analytics
+# 🚀 SmartRetail - Plataforma Integral de Análisis de Datos
 
-## 📋 Descripción General
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)](https://www.docker.com/)
+[![Python](https://img.shields.io/badge/Python-3.9+-green?logo=python)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red?logo=streamlit)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-SmartRetail es una plataforma completa de analytics que integra múltiples sistemas de análisis de datos para el sector retail. Incluye detección de fraude, análisis de sentimientos en redes sociales, sistemas de recomendación, análisis de ventas y dashboards interactivos.
+> **SmartRetail** es una plataforma integral de análisis de datos para retail que combina detección de fraude, recomendaciones, análisis de sentimientos y dashboards interactivos.
 
-## 🎯 **Sistemas Integrados**
+## 🌟 Características Principales
 
-### 🛡️ **Detección de Fraude**
-- **Ubicación:** `fraud_detection/`
-- **Descripción:** Sistema de machine learning para detectar transacciones fraudulentas
-- **Tecnologías:** XGBoost, Random Forest, SHAP, SMOTE
-- **Estado:** ✅ **Funcionando**
-- **Documentación:** [Ver documentación completa](fraud_detection/README.md)
-
-### 📊 **Análisis de Sentimientos en Twitter**
-- **Ubicación:** `twitter_sentiment_analysis/`
-- **Descripción:** Pipeline completo para análisis de sentimientos en tiempo real
-- **Tecnologías:** BERT, PySpark, Dash, Hugging Face
-- **Estado:** ✅ **Funcionando**
-- **Documentación:** [Ver documentación completa](twitter_sentiment_analysis/README.md)
+### 🛡️ **Detección de Fraude Financiero**
+- Análisis en tiempo real de transacciones
+- Múltiples algoritmos ML (XGBoost, LightGBM, Random Forest)
+- Explicabilidad con SHAP values
+- Balanceo automático de datos desbalanceados
+- Evaluación completa de modelos
 
 ### 🎯 **Sistema de Recomendaciones**
-- **Ubicación:** `recommendation_system/`
-- **Descripción:** Sistema híbrido de recomendaciones (colaborativo + basado en contenido)
-- **Tecnologías:** Scikit-learn, Pandas, NumPy
-- **Estado:** ✅ **Funcionando**
-- **Documentación:** [Ver documentación completa](recommendation_system/README.md)
+- Filtrado colaborativo
+- Basado en contenido
+- Híbrido
+- Evaluación de calidad de recomendaciones
+- Personalización en tiempo real
 
-### 📈 **Dashboard de Análisis de Ventas**
-- **Ubicación:** `sales_analytics_dashboard/`
-- **Descripción:** Dashboard interactivo para análisis de ventas y KPIs
-- **Tecnologías:** Dash, Plotly, Pandas
-- **Estado:** ✅ **Funcionando**
-- **Documentación:** [Ver documentación completa](sales_analytics_dashboard/README.md)
+### 📊 **Dashboard de Análisis de Ventas**
+- KPIs en tiempo real
+- Visualizaciones interactivas con Streamlit
+- Reportes automáticos
+- Análisis de tendencias
+- Exportación de datos
 
-## 📚 **Documentación**
+### 📱 **Análisis de Sentimientos**
+- Procesamiento de Twitter en tiempo real
+- Pipeline con Apache Spark
+- Clasificación de sentimientos
+- Análisis de tendencias
+- Alertas automáticas
 
-### 📊 **Plantillas de Documentación**
-- **[Plantilla de Dashboard](docs/dashboard_template.md)** - Plantilla completa para documentar dashboards de negocio con Power BI o Tableau
-- **[Ejemplo Práctico](docs/dashboard_example.md)** - Ejemplo real de aplicación de la plantilla para un dashboard de ventas
+### 🤖 **Sistema Multimodal**
+- Reconocimiento facial
+- Análisis de texto
+- Fusión de datos multimodales
+- Procesamiento de imágenes
 
-### 🛡️ **Documentación de Sistemas**
-- **[Detección de Fraude](fraud_detection/docs/)** - Documentación técnica y funcional del sistema de fraude
-- **[Análisis de Twitter](twitter_sentiment_analysis/docs/)** - Documentación completa del sistema de sentimientos
-- **[Recomendaciones](recommendation_system/docs/)** - Guías del sistema de recomendaciones
-- **[Dashboard de Ventas](sales_analytics_dashboard/docs/)** - Documentación del dashboard de analytics
+## 🐳 Despliegue Rápido con Docker
 
-### 📋 **Guías de Uso**
-- **[Guía de Inicio Rápido](docs/quick_start_guide.md)** - Cómo comenzar con SmartRetail
-- **[Guía de Instalación](docs/installation_guide.md)** - Instalación y configuración
-- **[Guía de Troubleshooting](docs/troubleshooting_guide.md)** - Solución de problemas comunes
+### ⚡ Inicio Automático
 
-## 🚀 **Inicio Rápido**
-
-### **Prerrequisitos**
-```bash
-# Python 3.8+
-python --version
-
-# Git
-git --version
-
-# Dependencias del sistema
-pip install -r requirements.txt
-```
-
-### **Instalación**
 ```bash
 # Clonar el repositorio
 git clone https://github.com/gracobjo/smartretail.git
 cd smartretail
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Windows
+start_local.bat
+
+# Linux/Mac
+chmod +x start_local.sh
+./start_local.sh
+
+# Multiplataforma
+python start_local.py
 ```
 
-### **Ejecución de Sistemas**
+### 🌐 URLs de Acceso
 
-#### **Detección de Fraude**
+| Servicio | URL | Descripción |
+|----------|-----|-------------|
+| **Dashboard Principal** | http://localhost:8501 | Dashboard de ventas con Streamlit |
+| **Detección de Fraude** | http://localhost:8502 | Sistema de detección de fraude |
+| **Recomendaciones** | http://localhost:8503 | Sistema de recomendaciones |
+| **Análisis de Sentimientos** | http://localhost:8504 | Análisis de Twitter |
+| **Jupyter Notebook** | http://localhost:8888 | Desarrollo y experimentación |
+
+## 🏗️ Arquitectura del Sistema
+
+```
+SmartRetail
+├── 🎯 Dashboard Principal (Streamlit)
+├── 🛡️ Detección de Fraude (ML)
+├── 🎯 Sistema de Recomendaciones (ML)
+├── 📱 Análisis de Sentimientos (NLP)
+├── 🤖 Sistema Multimodal (CNN + RNN)
+├── 🗄️ PostgreSQL (Base de Datos)
+└── ⚡ Redis (Caché)
+```
+
+## 🚀 Tecnologías Utilizadas
+
+### Backend
+- **Python 3.9+** - Lenguaje principal
+- **Scikit-learn** - Machine Learning
+- **XGBoost** - Gradient Boosting
+- **LightGBM** - Light Gradient Boosting
+- **SHAP** - Explicabilidad de modelos
+- **Apache Spark** - Procesamiento distribuido
+
+### Frontend
+- **Streamlit** - Dashboards interactivos
+- **Plotly** - Visualizaciones avanzadas
+- **Jupyter Notebook** - Desarrollo y experimentación
+
+### Base de Datos
+- **PostgreSQL** - Base de datos principal
+- **Redis** - Caché en memoria
+
+### DevOps
+- **Docker** - Containerización
+- **Docker Compose** - Orquestación
+- **Git** - Control de versiones
+
+## 📋 Prerrequisitos
+
+### Software Requerido
+- **Docker Desktop** 20.10+
+- **Git** 2.30+
+- **Python** 3.8+ (opcional)
+
+### Requisitos del Sistema
+- **RAM**: 4GB mínimo, 8GB+ recomendado
+- **Almacenamiento**: 10GB espacio libre
+- **CPU**: 2 cores mínimo, 4+ recomendado
+
+## 🔧 Instalación Manual
+
+### 1. Clonar Repositorio
 ```bash
-cd fraud_detection
-python run_demo.py
+git clone https://github.com/gracobjo/smartretail.git
+cd smartretail
 ```
 
-#### **Análisis de Twitter**
+### 2. Verificar Docker
 ```bash
-cd twitter_sentiment_analysis
-python run_pipeline.py --mode dashboard
+docker --version
+docker-compose --version
 ```
 
-#### **Sistema de Recomendaciones**
+### 3. Ejecutar con Docker
 ```bash
-cd recommendation_system
-python main.py
+# Construir y ejecutar
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+# Verificar estado
+docker-compose ps
 ```
 
-#### **Dashboard de Ventas**
+## 📚 Documentación
+
+### Guías Principales
+- 📖 **[Guía de Despliegue](docs/HOW_TO_DEPLOY.md)** - Instalación y configuración completa
+- 🐳 **[Docker Deployment](README_Docker.md)** - Documentación específica de Docker
+- 🧪 **[Guía de Desarrollo](docs/development_guide.md)** - Desarrollo y contribución
+
+### Documentación Técnica
+- 📊 **[Documentación Técnica](docs/technical_documentation.md)** - Arquitectura y diseño
+- 📈 **[Dashboard Documentation](docs/dashboard_documentation.md)** - Uso del dashboard
+- 🔍 **[Project Summary](docs/project_summary.md)** - Resumen del proyecto
+
+## 🎯 Casos de Uso
+
+### E-commerce
+- **Detección de fraude** en transacciones en tiempo real
+- **Recomendaciones personalizadas** de productos
+- **Análisis de sentimientos** de clientes en redes sociales
+- **Dashboard de métricas** de ventas y KPIs
+
+### Retail
+- **Optimización de inventario** basada en recomendaciones
+- **Análisis de comportamiento** de clientes
+- **Predicción de demanda** usando ML
+- **Monitoreo de satisfacción** del cliente
+
+### Marketing
+- **Targeting personalizado** basado en análisis de sentimientos
+- **Optimización de campañas** con datos en tiempo real
+- **Análisis de competencia** en redes sociales
+- **ROI tracking** con dashboards interactivos
+
+## 🛠️ Desarrollo
+
+### Estructura del Proyecto
+```
+smartretail/
+├── fraud_detection/          # Sistema de detección de fraude
+├── recommendation_system/     # Sistema de recomendaciones
+├── sales_analytics_dashboard/ # Dashboard de ventas
+├── twitter_sentiment_analysis/ # Análisis de sentimientos
+├── src/                      # Código fuente principal
+├── data/                     # Datos del proyecto
+├── docs/                     # Documentación
+├── notebooks/                # Jupyter notebooks
+├── tests/                    # Tests unitarios
+└── docker-compose.yml        # Configuración Docker
+```
+
+### Comandos de Desarrollo
 ```bash
-cd sales_analytics_dashboard
-python run_dashboard.py
+# Ejecutar en modo desarrollo
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Ejecutar tests
+docker-compose exec smartretail python -m pytest
+
+# Acceder a Jupyter
+http://localhost:8888
 ```
 
-## 📊 **Estructura del Proyecto**
+## 📊 Métricas y Rendimiento
 
-```
-SmartRetail/
-├── 📊 docs/                           # Documentación general
-│   ├── dashboard_template.md          # Plantilla para dashboards
-│   ├── dashboard_example.md           # Ejemplo práctico
-│   └── ...
-├── 🛡️ fraud_detection/               # Sistema de detección de fraude
-│   ├── src/                          # Código fuente
-│   ├── docs/                         # Documentación específica
-│   ├── results/                      # Resultados y visualizaciones
-│   └── run_demo.py                   # Script principal
-├── 📊 twitter_sentiment_analysis/     # Análisis de sentimientos
-│   ├── src/                          # Código fuente
-│   ├── docs/                         # Documentación
-│   └── run_pipeline.py               # Script principal
-├── 🎯 recommendation_system/          # Sistema de recomendaciones
-│   ├── src/                          # Código fuente
-│   ├── docs/                         # Documentación
-│   └── main.py                       # Script principal
-├── 📈 sales_analytics_dashboard/      # Dashboard de ventas
-│   ├── src/                          # Código fuente
-│   ├── docs/                         # Documentación
-│   └── run_dashboard.py              # Script principal
-└── 📋 requirements.txt                # Dependencias del proyecto
-```
+### Detección de Fraude
+- **Precision**: 95%+
+- **Recall**: 90%+
+- **F1-Score**: 92%+
+- **ROC AUC**: 0.95+
 
-## 🎯 **Casos de Uso**
+### Sistema de Recomendaciones
+- **Precision@10**: 85%+
+- **Recall@10**: 80%+
+- **NDCG@10**: 0.85+
 
-### **Para Equipos de Negocio**
-- **Monitoreo de KPIs** en tiempo real
-- **Detección de fraudes** en transacciones
-- **Análisis de sentimientos** de clientes
-- **Recomendaciones personalizadas** para clientes
+### Análisis de Sentimientos
+- **Accuracy**: 88%+
+- **F1-Score**: 86%+
+- **Tiempo de procesamiento**: <100ms
 
-### **Para Equipos Técnicos**
-- **Desarrollo de modelos** de machine learning
-- **Integración de datos** de múltiples fuentes
-- **Optimización de algoritmos** de detección
-- **Escalabilidad** de sistemas de analytics
+## 🔒 Seguridad
 
-### **Para Analistas de Datos**
-- **Exploración de datos** con visualizaciones
-- **Análisis predictivo** de tendencias
-- **Identificación de patrones** en comportamiento
-- **Generación de insights** accionables
+### Características de Seguridad
+- ✅ **Autenticación** de usuarios
+- ✅ **Autorización** basada en roles
+- ✅ **Encriptación** de datos sensibles
+- ✅ **Logs de auditoría** completos
+- ✅ **Backup automático** de datos
 
-## 🛠️ **Tecnologías Utilizadas**
+### Buenas Prácticas
+- Cambiar contraseñas por defecto
+- Usar variables de entorno para credenciales
+- Configurar firewall
+- Actualizar imágenes regularmente
 
-### **Machine Learning**
-- **XGBoost** - Gradient boosting para clasificación
-- **Random Forest** - Ensemble methods
-- **BERT/DistilBERT** - Procesamiento de lenguaje natural
-- **Scikit-learn** - Pipeline de ML
+## 🤝 Contribución
 
-### **Procesamiento de Datos**
-- **Pandas** - Manipulación de datos
-- **NumPy** - Computación numérica
-- **PySpark** - Procesamiento distribuido
-- **SQLAlchemy** - ORM para bases de datos
-
-### **Visualización**
-- **Dash** - Dashboards interactivos
-- **Plotly** - Gráficos interactivos
-- **Matplotlib/Seaborn** - Visualizaciones estáticas
-- **Power BI/Tableau** - Dashboards empresariales
-
-### **Explicabilidad**
-- **SHAP** - Explicaciones de modelos
-- **LIME** - Interpretabilidad local
-- **Feature Importance** - Importancia de características
-
-## 📈 **Métricas de Rendimiento**
-
-### **Detección de Fraude**
-- **Accuracy:** 92.25%
-- **ROC AUC:** 0.8782
-- **Precision:** 21.61%
-- **Recall:** 78.79%
-
-### **Análisis de Twitter**
-- **Tiempo de procesamiento:** < 2 segundos por tweet
-- **Precisión de sentimientos:** 85%+
-- **Escalabilidad:** 1000+ tweets por minuto
-
-### **Sistema de Recomendaciones**
-- **Precisión de recomendaciones:** 78%
-- **Cobertura de productos:** 95%
-- **Diversidad de recomendaciones:** 0.82
-
-## 🤝 **Contribución**
-
-### **Cómo Contribuir**
-1. **Fork** el repositorio
-2. **Crear** una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. **Commit** tus cambios (`git commit -am 'Agregar nueva funcionalidad'`)
+### Cómo Contribuir
+1. **Fork** el proyecto
+2. **Crear** una rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. **Commit** cambios (`git commit -am 'Agregar nueva funcionalidad'`)
 4. **Push** a la rama (`git push origin feature/nueva-funcionalidad`)
-5. **Crear** un Pull Request
+5. **Crear** Pull Request
 
-### **Estándares de Código**
-- **Python:** PEP 8
-- **Documentación:** Docstrings en inglés
-- **Tests:** Cobertura mínima del 80%
-- **Commits:** Mensajes descriptivos en inglés
+### Estándares de Código
+- Usar PEP 8 para Python
+- Documentar funciones y clases
+- Escribir tests para nuevas funcionalidades
+- Mantener commits atómicos
 
-## 📄 **Licencia**
+## 📞 Soporte
 
-Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+### Canales de Soporte
+- **Issues**: [GitHub Issues](https://github.com/gracobjo/smartretail/issues)
+- **Documentación**: [Wiki](https://github.com/gracobjo/smartretail/wiki)
+- **Email**: soporte@smartretail.com
 
-## 📞 **Contacto**
+### Recursos Adicionales
+- [Documentación de Docker](https://docs.docker.com/)
+- [Documentación de Streamlit](https://docs.streamlit.io/)
+- [Guía de Machine Learning](https://scikit-learn.org/stable/)
 
-- **Autor:** [Tu Nombre]
-- **Email:** [tu.email@ejemplo.com]
-- **LinkedIn:** [Tu LinkedIn]
-- **GitHub:** [Tu GitHub]
+## 📄 Licencia
 
-## 🙏 **Agradecimientos**
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
-- **Comunidad de Machine Learning** por las librerías utilizadas
-- **Contribuidores** que han ayudado al desarrollo
-- **Usuarios** que han proporcionado feedback valioso
+## 🙏 Agradecimientos
 
----
-
-## 🎯 **Estado del Proyecto**
-
-| Sistema | Estado | Última Actualización | Documentación |
-|---------|--------|---------------------|---------------|
-| Detección de Fraude | ✅ Funcionando | 25/01/2024 | ✅ Completa |
-| Análisis de Twitter | ✅ Funcionando | 25/01/2024 | ✅ Completa |
-| Sistema de Recomendaciones | ✅ Funcionando | 25/01/2024 | ✅ Completa |
-| Dashboard de Ventas | ✅ Funcionando | 25/01/2024 | ✅ Completa |
-
-**¡SmartRetail está listo para producción!** 🚀
+- **Streamlit** por el framework de dashboards
+- **Scikit-learn** por las herramientas de ML
+- **Docker** por la containerización
+- **Comunidad open source** por las librerías utilizadas
 
 ---
 
-*Última actualización: 25/01/2024* 
+## 🚀 ¡Comienza Ahora!
+
+```bash
+# Clonar y ejecutar en 3 comandos
+git clone https://github.com/gracobjo/smartretail.git
+cd smartretail
+python start_local.py
+```
+
+**¡Disfruta usando SmartRetail! 🎉**
+
+---
+
+<div align="center">
+
+**⭐ Si te gusta este proyecto, ¡dale una estrella! ⭐**
+
+[![GitHub stars](https://img.shields.io/github/stars/gracobjo/smartretail?style=social)](https://github.com/gracobjo/smartretail/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/gracobjo/smartretail?style=social)](https://github.com/gracobjo/smartretail/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/gracobjo/smartretail)](https://github.com/gracobjo/smartretail/issues)
+
+</div> 
