@@ -1,0 +1,117 @@
+version: '3.8'
+
+services:
+  # Servicio principal de SmartRetail (Desarrollo)
+  smartretail:
+    build: .
+    container_name: smartretail-main-dev
+    ports:
+      - "8501:8501"  # Streamlit dashboard
+      - "8888:8888"  # Jupyter notebooks
+      - "5000:5000"  # API endpoints
+    volumes:
+      - .:/app  # Montar código fuente para hot reload
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+      - DEBUG=true
+    command: streamlit run sales_analytics_dashboard/run_dashboard.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+    restart: unless-stopped
+
+  # Servicio de detección de fraude (Desarrollo)
+  fraud-detection:
+    build: .
+    container_name: smartretail-fraud-dev
+    ports:
+      - "8502:8501"
+    volumes:
+      - .:/app  # Montar código fuente para hot reload
+      - ./fraud_detection:/app/fraud_detection
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+      - DEBUG=true
+    command: python fraud_detection/run_demo.py
+    restart: unless-stopped
+
+  # Servicio de recomendaciones (Desarrollo)
+  recommendation-system:
+    build: .
+    container_name: smartretail-recommendations-dev
+    ports:
+      - "8503:8501"
+    volumes:
+      - .:/app  # Montar código fuente para hot reload
+      - ./recommendation_system:/app/recommendation_system
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+      - DEBUG=true
+    command: python recommendation_system/main.py
+    restart: unless-stopped
+
+  # Servicio de análisis de sentimientos (Desarrollo)
+  sentiment-analysis:
+    build: .
+    container_name: smartretail-sentiment-dev
+    ports:
+      - "8504:8501"
+    volumes:
+      - .:/app  # Montar código fuente para hot reload
+      - ./twitter_sentiment_analysis:/app/twitter_sentiment_analysis
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+      - DEBUG=true
+    command: python twitter_sentiment_analysis/run_pipeline.py
+    restart: unless-stopped
+
+  # Base de datos (Desarrollo)
+  postgres:
+    image: postgres:13
+    container_name: smartretail-db-dev
+    environment:
+      POSTGRES_DB: smartretail_dev
+      POSTGRES_USER: smartretail_user
+      POSTGRES_PASSWORD: smartretail_pass_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Redis para caché (Desarrollo)
+  redis:
+    image: redis:6-alpine
+    container_name: smartretail-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    restart: unless-stopped
+
+  # Jupyter Notebook para desarrollo
+  jupyter:
+    build: .
+    container_name: smartretail-jupyter-dev
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - ENVIRONMENT=development
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+    restart: unless-stopped
+
+volumes:
+  postgres_data_dev:
+  redis_data_dev: 
