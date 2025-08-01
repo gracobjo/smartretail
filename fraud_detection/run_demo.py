@@ -27,11 +27,11 @@ from pathlib import Path
 # Agregar el directorio src al path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-from utils.config import MODEL_CONFIG
-from data_processing.data_processor import DataProcessor
-from models.fraud_detector import FraudDetector
-from evaluation.evaluator import FraudEvaluator
-from explainability.shap_explainer import SHAPExplainer
+from src.utils.config import MODEL_CONFIG
+from src.data_processing.data_processor import DataProcessor
+from src.models.fraud_detector import FraudDetector
+from src.evaluation.evaluator import FraudEvaluator
+from src.explainability.shap_explainer import SHAPExplainer
 
 def create_synthetic_data(n_samples=10000, fraud_ratio=0.05):
     """
